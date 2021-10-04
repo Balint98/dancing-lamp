@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DancingManService } from '../dancing-man.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { DancingManService } from '../dancing-man.service';
   templateUrl: './dancing-man.component.html',
   styleUrls: ['./dancing-man.component.css']
 })
-export class DancingManComponent implements OnInit, AfterViewChecked {
+export class DancingManComponent implements OnInit {
 
   constructor(private dancingManService: DancingManService) { }
 
@@ -22,8 +22,29 @@ export class DancingManComponent implements OnInit, AfterViewChecked {
     //console.log(this.dancingCanvas.nativeElement.height);
     this.context = this.dancingCanvas.nativeElement.getContext('2d')!;
 
+    this.updateFrame();
+  }
+
+
+  ngOnInit(): void {
+    this.dancingManService.getFrame()
+      .subscribe((next: string[])=>{
+        console.log(next);
+        this.frame.slice().reverse();
+      });
+
+      this.dancingManService.newFrameSubject
+        .subscribe((next: string[])=>{
+          //console.log(next);
+          this.frame = next.map((x) => x);
+          this.frame.reverse();
+          this.updateFrame();
+        });
+  }
+
+  private updateFrame(): void {
+    this.context.clearRect(0, 0, this.dancingCanvas.nativeElement.width, this.dancingCanvas.nativeElement.height);
     // drawing
-    
     let arcRadius = this.dancingCanvas.nativeElement.height / 64 / 2; // 3.9
     let row = 0;
     for(let i = 0;i < this.frame.length; i++){
@@ -31,7 +52,7 @@ export class DancingManComponent implements OnInit, AfterViewChecked {
       if(column === 63){
         row++;
       }
-      //console.log("row: ",row, ", column: ", column);
+
       this.context.beginPath();
       if(this.frame[i] === "0"){
         this.context.fillStyle="blue";
@@ -44,36 +65,6 @@ export class DancingManComponent implements OnInit, AfterViewChecked {
       this.context.arc(column*arcRadius*2,row*arcRadius*2,arcRadius,0,360);
       this.context.fill();
     }
-
-  }
-
-  ngAfterViewChecked(): void{
-    // this.dancingCanvas.nativeElement.height = 500;
-    // this.dancingCanvas.nativeElement.width = 500;
-    // console.log(this.dancingCanvas.nativeElement.height);
-    // this.context = this.dancingCanvas.nativeElement.getContext('2d')!;
-
-    // this.context.rect(40, 40, 40, 40);
-    // this.context.fill();
-  }
-
-  ngOnInit(): void {
-    this.dancingManService.getFrame()
-      .subscribe((next: string[])=>{
-        console.log(next);
-        // this.frame = next.map((x) => x);
-        // this.frame.reverse();
-        this.frame.slice().reverse();
-      });
-
-      this.dancingManService.newFrameSubject
-        .subscribe((next: string[])=>{
-          //console.log(next);
-          this.frame = next.map((x) => x);
-          this.frame.reverse();
-          //this.frame = next;
-          this.ngAfterViewInit();
-        });
   }
 
 }
