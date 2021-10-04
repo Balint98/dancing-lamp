@@ -27,15 +27,8 @@ export class DancingManComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.dancingManService.getFrame()
-      .subscribe((next: string[])=>{
-        console.log(next);
-        this.frame.slice().reverse();
-      });
-
       this.dancingManService.newFrameSubject
         .subscribe((next: string[])=>{
-          //console.log(next);
           this.frame = next.map((x) => x);
           this.frame.reverse();
           this.updateFrame();
