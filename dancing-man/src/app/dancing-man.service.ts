@@ -11,7 +11,7 @@ export class DancingManService {
 
   constructor() {
 
-    let subject = webSocket("ws://localhost:8080");
+    let subject = webSocket("ws://localhost:8081");
 
     subject.subscribe(
       (msg: any) => {
