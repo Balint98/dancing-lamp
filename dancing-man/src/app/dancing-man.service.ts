@@ -16,6 +16,8 @@ export class DancingManService {
     subject.subscribe(
       (msg: any) => {
         // this.newFrameSubject.next(msg);
+        console.log("new message from websocket server");
+        
         this.frames = msg;
         let i = 0;
         setInterval(()=>{
