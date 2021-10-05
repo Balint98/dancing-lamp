@@ -17,11 +17,7 @@ import {
     server: Server;
   
     handleConnection(client: WebSocket, ...args: any[]) {
-        console.log("new client");
-        // let i = 0;
-        // setInterval(()=>{
-        //     client.send("message "+i++);
-        // }, 1000);
+        console.log("new client: ", client);
         let frameSocket = new WebSocket('ws://localhost:8080');
         frameSocket.onmessage = (message)=>{
             client.send(message.data);

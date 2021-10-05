@@ -1,7 +1,7 @@
 <html>
   <head>
     <script>
-      const socket = new WebSocket('ws://localhost:8080');
+      const socket = new WebSocket('ws://localhost:8081');
       socket.onopen = function() {
         console.log('Connected');
         socket.send(
@@ -11,7 +11,7 @@
           }),
         );
         socket.onmessage = function(data) {
-          console.log(JSON.parse(data.data));
+          console.log(data.data);
         };
       };
     </script>
