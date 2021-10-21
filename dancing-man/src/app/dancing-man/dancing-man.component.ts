@@ -29,7 +29,7 @@ export class DancingManComponent implements OnInit {
   ngOnInit(): void {
       this.dancingManService.newFrameSubject
         .subscribe((next: string[])=>{
-          this.frame = next.map((x) => x);
+          this.frame = next;
           this.frame.reverse();
           this.updateFrame();
         });
