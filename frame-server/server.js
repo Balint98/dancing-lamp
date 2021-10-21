@@ -1,7 +1,4 @@
 import { WebSocketServer } from 'ws';
-// import { createRequire } from "module";
-// const require = createRequire(import.meta.url);
-// const processLineByLine = require('./frame_server.cjs');
 import  processLineByLine  from './frame_server.js';
 
 const FPS = 64;

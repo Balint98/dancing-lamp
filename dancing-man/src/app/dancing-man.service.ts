@@ -23,15 +23,5 @@ export class DancingManService {
         console.log("disconnect");
       } // Called when connection is closed (for whatever reason).
     );
-
-    // let i = 0;
-    // setInterval(()=>{
-    //   if(i===this.frames.length-1){
-    //     i = 0;
-    //   }else{
-    //     i++;
-    //   }
-    //   this.newFrameSubject.next(this.frames[i]);
-    // }, 250);
   }
 }
